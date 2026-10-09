@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, maximum-scale=1">
+<meta name="theme-color" content="#0E1116">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Hexfront</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon-192.png">
+  <script type="module" crossorigin src="./assets/index-Cc6qx8Zr.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/three-NjItnlYf.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-BU2cLosu.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !/localhost|127\.0\.0\.1/.test(location.hostname)) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").then((reg) => {
+      const announce = () => {
+        if (document.getElementById("update-banner")) return;
+        const b = document.createElement("button");
+        b.id = "update-banner";
+        b.textContent = "A new version of Hexfront is ready. Tap to reload.";
+        b.style.cssText = "position:fixed;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:99;padding:14px;border-radius:14px;border:1px solid #3FC1C9;background:#171D26;color:#E8ECF1;font:600 15px system-ui,sans-serif;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5)";
+        b.onclick = () => location.reload();
+        document.body.appendChild(b);
+      };
+      if (reg.waiting && navigator.serviceWorker.controller) announce();
+      reg.addEventListener("updatefound", () => { const w = reg.installing; if (!w) return; w.addEventListener("statechange", () => { if (w.state === "installed" && navigator.serviceWorker.controller) announce(); }); });
+      setInterval(() => reg.update().catch(() => {}), 10 * 60 * 1000);
+    }).catch(() => {}));
+  }
+</script>
+</body>
+</html>
